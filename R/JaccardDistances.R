@@ -2,7 +2,7 @@
 
 # Initial clustering diagram----
 # Read in and reformat the data
-setwd("/home/akoontz11/kaiser/Primula/ipyrad_UniqueReps/UniqueReps_outfiles/distance_matrix/")
+setwd("/home/akoontz11/kaiser/Primula/ipyrad/ipyrad_UniqueReps//UniqueReps_outfiles/distance_matrix/")
 JMat <- read.table("Jaccob_sim_means.csv", header=TRUE, sep = ",")
 # Transpose rows and columns to get Jaccard similarities for each variety in a column
 JMat <- t(as.matrix(JMat))
@@ -29,6 +29,11 @@ JMat[90:96,90:96]
 hist(JMat, xlab="Jaccard distance value", ylab="Number of pairwise comparisons", main="Min Samples per Locus: 10",
      breaks=seq(from=0, to=1, by=0.02),xlim=c(0,1.0))
 abline(v=JMat[indices],col=550)
+
+hist(JMat, xlab="Jaccard distance value", ylab="Number of pairwise comparisons", main="",
+     breaks=seq(from=0, to=1, by=0.02),xlim=c(0,1.0), mgp=c(3,1,0), mar=c(5,4,1,1)+0.1, yaxt="n")
+axis(side=2, at=seq(0,800,by=200), labels=T, tick=T, line=-1, ylab="Number of pairwise comparisons")
+abline(v=JMat[indices],col="purple")
 
 # Zoomed in
 hist(JMat, xlab="Jaccard distance value", ylab="Number of pairwise comparisons", main="Jaccard distances: replicates",
