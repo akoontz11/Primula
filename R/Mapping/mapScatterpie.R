@@ -66,10 +66,11 @@ ggplot(data = greatBasin) +
   # State labels
   geom_text(data = greatBasin, aes(X, Y, label = c("NV", "UT", "ID", "OR")), size = 3) +
   # Specify plotting window
-  coord_sf(xlim = c(-126, -108), ylim = c(34, 49), expand = FALSE) + 
+  coord_sf(xlim = c(-126, -108), ylim = c(34.5, 49.5), expand = FALSE) + 
   # Scatterpie line, using the built pops matrix as data
   geom_scatterpie(data = pops, 
                   aes(x=longitude, y=latitude, r = radius),
+                  legend_name = "Clusters",
                   cols = c("SRP","JAR","OWY","MAG","DOM","NEV","PAR"), 
                   alpha = 0.5) +
   scale_fill_manual(
@@ -84,3 +85,24 @@ ggplot(data = greatBasin) +
                "PAR" = "#2171B5"
     ) 
 )
+
+# DEM
+library(dplyr)
+library(raster)
+library(rgdal)
+library(maptools)
+library(beepr)
+
+# Load in DEM files and convert into rasters
+setwd("~/kaiser/Primula/code/Map/DEM/dem90_hf/dem90_hf/")
+files <- list.files(recursive=TRUE)
+files <- files[-c(2,4)]
+rasters.list <- sapply(files, raster)
+
+# Run the mosaic function on the raster list
+names(rasters.list) <- NULL
+rasters.list$fun <- mean
+mosaic <- do.call(mosaic, rasters.list)
+
+#create a plot
+plot(mosaic, col = gray.colors(20, start = 0, end = 1))
