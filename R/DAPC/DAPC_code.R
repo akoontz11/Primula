@@ -1,3 +1,4 @@
+library(adegenet)
 # %%% DAPC--JUNESUBSET STRUCTURE FILE %%% ----
 setwd("/home/akoontz11/kaiser/Primula/ipyrad/JuneSubset/JuneSubset_outfiles/")
 
@@ -13,13 +14,13 @@ show_col(colors)
 # Find number of clusters
 grp <- find.clusters(junesub.genind, max.n.clust=60)
 # Number of retained PCs (here, there is no cost to retaining a lot of PCs): 80
-# Number of clusters: 11 (has the lowest BIC, 299.1234)
+# Number of clusters: 7 (even though 11 has the lowest BIC)
 grp$stat
 
 # Conduct DAPC
 dapc1 <- dapc(x=junesub.genind, pop=grp$grp)
 # Number of retained PCs: 7
-# Number of discriminant functions to retain: 3
+# Number of discriminant functions to retain: 2
 str(dapc1)
 # List grouping of each individual (helpful for determining correct coloration)
 dapc1$grp
@@ -28,9 +29,9 @@ dapc1$grp
 scatter(dapc1)
 scatter(dapc1, label = NULL)
 scatter(dapc1, clab = 0.5, label = letters[1:15])
-scatter(dapc1, clab = 0.5)
+scatter(dapc1, clab = 0.5, scree.da = F)
 
 scatter(dapc1, scree.da=F, bg="white", pch=20, cell=0, cstar=0, solid=0.6, clab=0, legend=T,
         posi.leg=locator(n=1), cleg=1.0, cex=1.8, inset.solid=1, 
-        col = c("#D95F02","#E7298A","#66A61E","#2171B5","#8C510A","#7570B3","#FF0000"), 
-        txt.leg = c("cusickiana_Jarbidge","cusickiana_Owyhee","maguirei","parryi","cusickiana_Idaho","domensis","nevadensis"))
+        col = c("#66A61E","#E7298A","#7570B3","#2171B5","#666666","#8C510A","#D95F02"), 
+        txt.leg = c("maguirei","cusickiana_Owyhee","domensis","parryi","nevadensis","cusickiana_Idaho","cusickiana_Jarbidge"))
