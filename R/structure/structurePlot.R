@@ -2,14 +2,14 @@ setwd("~/kaiser/Primula/code/structure/JuneSubset/")
 
 # %%% READING IN DEMO FILE %%%----
 # Reading in K7_subset file, an updated version of the CLUMPAK K7.output file. 
-# Comes from UniqueReps ipyrad run, MinSamples35 STRUCTURE run.
+# Comes from JuneSubset ipyrad/STRUCTURE run
 # This contains samples in their presented order, and has capillaris and one Troy Peak sample removed from file
 k7 <- read.table("K7_plot.csv", header=T)
 
 # Make a vector of names
 names <- c("cusickiana_Idaho","cusickiana_Jarbidge","cusickiana_Owyhee","maguirei","domensis","nevadensis_GRBA","nevadensis_Troy", "parryi")
 # Make a vector for name positions on graph
-labelPos <- c(16, 32, 37, 50, 71, 82, 87, 94)
+labelPos <- c(16, 32, 37, 50, 71, 82, 88, 94)
 
 # Plotting function for K of any value
 plot_k <- function(klist,labelPositions,...){
@@ -31,7 +31,8 @@ plot_k <- function(klist,labelPositions,...){
   # y axis
   axis(2, at = c(0, 0.25, 0.5, 0.75, 1), labels=c("0", "0.25", "0.50", "0.75", "1.00"), cex.axis = 1, las = 2, pos = -0.2, xpd=T)
   # Add group labels
-  text(x=labelPositions, y=-0.026, srt=45, adj=1, xpd=TRUE, labels=names, cex=0.8)
+  # text(x=labelPositions, y=-0.026, srt=45, adj=1, xpd=TRUE, labels=names, cex=0.8)
+  text(x=labelPositions, y=-0.031, srt=35, adj=1, xpd=TRUE, labels=names, cex=1)
 }
 dev.off()
 plot_k(k7[,4:10], labelPos)
