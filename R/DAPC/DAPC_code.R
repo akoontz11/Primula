@@ -35,3 +35,8 @@ scatter(dapc1, scree.da=F, bg="white", pch=20, cell=0, cstar=0, solid=0.6, clab=
         posi.leg=locator(n=1), cleg=1.0, cex=1.8, inset.solid=1, 
         col = c("#66A61E","#E7298A","#7570B3","#2171B5","#666666","#8C510A","#D95F02"), 
         txt.leg = c("maguirei","cusickiana_Owyhee","domensis","parryi","nevadensis","cusickiana_Idaho","cusickiana_Jarbidge"))
+
+# Plot for ESA
+scatter(dapc1, scree.da=F, bg="white", pch=20, cell=0, cstar=0, solid=0.6, clab=0, legend=F,
+        cleg=1.0, cex=2.5, inset.solid=1, 
+        col = c("#E7298A","#D95F02","#8C510A","#66A61E","#666666","#2171B5","#7570B3"))
