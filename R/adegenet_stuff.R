@@ -3,7 +3,7 @@ library(ade4)
 library(hierfstat)
 library(vcfR)
 library(scales)
-setwd("/home/akoontz11/kaiser/Primula/ipyrad_UniqueReps/UniqueReps_outfiles/")
+setwd("/home/akoontz11/kaiser/Code/ipyrad/UniqueReps/Outfiles_UniqueReps")
 
 # %%% REFORMATTING VCF OBJECT AND REMOVING LOW SNP SAMPLES %%% ----
 # Read in vcf object5
@@ -175,71 +175,3 @@ scatter(dapc1, only.grp = as.character(c(1:2,4:9,11:12)), clab=0.45) # Fails, sa
 scatter(dapc1, clab = 0, legend = T, txt.leg = paste("Cluster", 1:6))
 
 scatter(dapc1, label = NULL, col = c("#2171B5","#D95F02","#7570B3","#E7298A","#66A61E","#8C510A","#666666"))
-
-# %%% FST CALCULATIONS %%% ----
-library(hierfstat)
-
-# %%% Complex-wide analysis %%%
-# Read in relevant STRUCTURE file: 82 samples, 1277 loci, 2 rows per individual, etc.
-jSub <- read.structure("JuneSubset.str", n.ind=82, n.loc=1277, onerowperind=FALSE,
-                       col.lab=1, col.pop=0, ask=FALSE)
-
-# Declare vector of population labels
-popLabels <- vector(length = 82)
-# Assign labels
-# Snake River Plain (cusickiana)
-popLabels[grepl("Ck[1-7]", rownames(jSub@tab))] <- 1
-# Jarbidge (cusickiana)
-popLabels[grepl("Ck[8]", rownames(jSub@tab))] <- 2
-# Owyhee (cusickiana)
-popLabels[grepl("Ck[9]", rownames(jSub@tab))] <- 3
-# domensis
-popLabels[grepl("Dm", rownames(jSub@tab))] <- 4
-# maguirei
-popLabels[grepl("Mg", rownames(jSub@tab))] <- 5
-# GRBA (nevadensis)
-popLabels[grepl("Nv1[2]", rownames(jSub@tab))] <- 6
-# Troy (nevadensis)
-popLabels[grepl("Nv1[3]", rownames(jSub@tab))] <- 7
-# parryi
-popLabels[grepl("Pa", rownames(jSub@tab))] <- 8
-
-# Push population labels into genind object
-pop(jSub) <- factor(popLabels)
-
-# (...for checking that samples and population labels line up)
-cbind(rownames(jSub@tab), popLabels)
-
-# Calculate fstats between populations
-f.stats.all <- pairwise.fst(x = jSub,pop = jSub@pop, res.type = "dist")
-f.stats.all
-
-# %%% maguirei-only analysis %%%
-# Navigate to directory containing results of maguirei-only ipyrad run
-setwd("/home/akoontz11/kaiser/Primula/ipyrad_MaguireiOnly/MaguireiOnly_outfiles")
-
-# Read in relevant STRUCTURE file: 18 samples, 68492 loci, 2 rows per individual, etc.
-magOnly <- read.structure("MaguireiOnly.str", n.ind=18, n.loc=68492, onerowperind=FALSE,
-                          col.lab=1, col.pop=0, ask=FALSE)
-
-# Declare vector of population labels
-magLabels <- vector(length = 18)
-# Assign labels
-# Second Practice Wall
-magLabels[grepl("Mg[3-4]", rownames(magOnly@tab))] <- 1
-# Greenhouse Wall
-magLabels[grepl("Mg[5]", rownames(magOnly@tab))] <- 2
-# Right Hand Fork
-magLabels[grepl("Mg[6]", rownames(magOnly@tab))] <- 3
-# Seed Source
-magLabels[grepl("Mg[7]", rownames(magOnly@tab))] <- 4
-
-# Push population labels into genind object
-pop(magOnly) <- factor(magLabels)
-
-# (...for checking that samples and population labels line up)
-cbind(rownames(magOnly@tab), magLabels)
-
-# Calculate fstats between populations
-f.stats.maguirei <- pairwise.fst(x=magOnly,pop=magOnly@pop)
-f.stats.maguirei
