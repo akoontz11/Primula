@@ -18,11 +18,11 @@ magLabels <- vector(length = 18)
 # Second Practice Wall
 magLabels[grepl("Mg[3-4]", rownames(magOnly@tab))] <- 1
 # Greenhouse Wall
-magLabels[grepl("Mg[5]", rownames(magOnly@tab))] <- 2
+magLabels[grepl("Mg[5]", rownames(magOnly@tab))] <- 1
 # Right Hand Fork
-magLabels[grepl("Mg[6]", rownames(magOnly@tab))] <- 3
+magLabels[grepl("Mg[6]", rownames(magOnly@tab))] <- 2
 # Seed Source
-magLabels[grepl("Mg[7]", rownames(magOnly@tab))] <- 4
+magLabels[grepl("Mg[7]", rownames(magOnly@tab))] <- 3
 
 # Push population labels into genind object
 pop(magOnly) <- factor(magLabels)
@@ -52,7 +52,7 @@ SRPLabels[grepl("Ck[1-2][0-9]", rownames(SRPOnly@tab))] <- 2
 # Camas Prairie
 SRPLabels[grepl("Ck[2-3][0-9]", rownames(SRPOnly@tab))] <- 3
 # CRMO
-SRPLabels[grepl("Ck[4-5][0-9]", rownames(SRPOnly@tab))] <- 4
+SRPLabels[grepl("Ck[4-5][0-9]", rownames(SRPOnly@tab))] <- 3
 
 # Push population labels into genind object
 pop(SRPOnly) <- factor(SRPLabels)
