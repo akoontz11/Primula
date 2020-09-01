@@ -1,7 +1,70 @@
 # %%% FST CALCULATIONS %%%
+library(utils)
 library(hierfstat)
+library(pegas)
 
-# %%% Complex-wide analysis %%%----
+# %%% adegenet %%%
+# maguirei-only analysis----
+# Navigate to directory containing maguirei-only STRUCTURE file
+setwd("/home/akoontz11/kaiser/Code/structure/MaguireiOnly")
+
+# Read in relevant .ustr file (smaller in size): 18 samples, 17988 loci, 2 rows per individual, etc.
+magOnly <- read.structure("MaguireiOnly.stru", n.ind=18, n.loc=17988, onerowperind=FALSE,
+                          col.lab=1, col.pop=0, ask=FALSE)
+
+# Declare vector of population labels
+magLabels <- vector(length = 18)
+# Assign labels
+# Second Practice Wall
+magLabels[grepl("Mg[3-4]", rownames(magOnly@tab))] <- 1
+# Greenhouse Wall
+magLabels[grepl("Mg[5]", rownames(magOnly@tab))] <- 2
+# Right Hand Fork
+magLabels[grepl("Mg[6]", rownames(magOnly@tab))] <- 3
+# Seed Source
+magLabels[grepl("Mg[7]", rownames(magOnly@tab))] <- 4
+
+# Push population labels into genind object
+pop(magOnly) <- factor(magLabels)
+
+# (...for checking that samples and population labels line up)
+cbind(rownames(magOnly@tab), magLabels)
+
+# Calculate fstats between populations
+f.stats.maguirei <- pairwise.fst(x=magOnly,pop=magOnly@pop)
+f.stats.maguirei
+
+# SRP-only analysis----
+# Navigate to directory containing Snake River Plain-only STRUCTURE file
+setwd("/home/akoontz11/kaiser/Code/structure/SnakeRiverPlainOnly")
+
+# Read in relevant .stru (.ustr) file (smaller in size): 24 samples, 4410 loci, 2 rows per individual, etc.
+SRPOnly <- read.structure("SnakeRiverPlainOnly.stru", n.ind=24, n.loc=4410, onerowperind=FALSE,
+                          col.lab=1, col.pop=0, ask=FALSE)
+
+# Declare vector of population labels
+SRPLabels <- vector(length = 24)
+# Assign labels
+# Boise
+SRPLabels[grepl("Ck[0-9]", rownames(SRPOnly@tab))] <- 1
+# Bear
+SRPLabels[grepl("Ck[1-2][0-9]", rownames(SRPOnly@tab))] <- 2
+# Camas Prairie
+SRPLabels[grepl("Ck[2-3][0-9]", rownames(SRPOnly@tab))] <- 3
+# CRMO
+SRPLabels[grepl("Ck[4-5][0-9]", rownames(SRPOnly@tab))] <- 4
+
+# Push population labels into genind object
+pop(SRPOnly) <- factor(SRPLabels)
+
+# (...for checking that samples and population labels line up)
+cbind(rownames(SRPOnly@tab), SRPLabels)
+
+# Calculate fstats between populations
+f.stats.SRP <- pairwise.fst(x=SRPOnly,pop=SRPOnly@pop)
+f.stats.SRP
+
+# Complex-wide analysis----
 # Navigate to directory containing results of JuneSubset ipyrad run
 setwd("/home/akoontz11/kaiser/Code/ipyrad/JuneSubset/Outfiles")
 
@@ -39,62 +102,25 @@ cbind(rownames(jSub@tab), popLabels)
 f.stats.all <- pairwise.fst(x = jSub,pop = jSub@pop, res.type = "dist")
 f.stats.all
 
-# %%% maguirei-only analysis %%%----
-# Navigate to directory containing maguirei-only STRUCTURE file
-setwd("/home/akoontz11/kaiser/Code/structure/MaguireiOnly")
 
-# Read in relevant .ustr file (smaller in size): 18 samples, 17988 loci, 2 rows per individual, etc.
-magOnly <- read.structure("MaguireiOnly.stru", n.ind=18, n.loc=17988, onerowperind=FALSE,
-                          col.lab=1, col.pop=0, ask=FALSE)
 
-# Declare vector of population labels
-magLabels <- vector(length = 18)
-# Assign labels
-# Second Practice Wall
-magLabels[grepl("Mg[3-4]", rownames(magOnly@tab))] <- 1
-# Greenhouse Wall
-magLabels[grepl("Mg[5]", rownames(magOnly@tab))] <- 2
-# Right Hand Fork
-magLabels[grepl("Mg[6]", rownames(magOnly@tab))] <- 3
-# Seed Source
-magLabels[grepl("Mg[7]", rownames(magOnly@tab))] <- 4
+# %%% pegas %%%----
+# maguirei-only analysis----
+# Convert genind object to loci (data.frame) format
+ps.magOnly <- as.loci(magOnly)
+# Generate table of Fit, Fst, and Fis for each allele
+mag.Fsttab <- Fst(x = ps.magOnly, pop = ps.magOnly$population, quiet = FALSE)
+head(mag.Fsttab, 6)
 
-# Push population labels into genind object
-pop(magOnly) <- factor(magLabels)
+# Calculate mean Fst
+mean(mag.Fsttab[,2], na.rm = TRUE)
 
-# (...for checking that samples and population labels line up)
-cbind(rownames(magOnly@tab), magLabels)
+# SRP-only analysis----
+# Convert genind object to loci (data.frame) format
+ps.SRPOnly <- as.loci(SRPOnly)
+# Generate table of Fit, Fst, and Fis for each allele
+SRP.Fsttab <- Fst(x = ps.SRPOnly, pop = ps.SRPOnly$population, quiet = FALSE)
+head(SRP.Fsttab, 6)
 
-# Calculate fstats between populations
-f.stats.maguirei <- pairwise.fst(x=magOnly,pop=magOnly@pop)
-f.stats.maguirei
-
-# %%% Snake River Plain-only analysis %%%----
-# Navigate to directory containing Snake River Plain-only STRUCTURE file
-setwd("/home/akoontz11/kaiser/Code/structure/SnakeRiverPlainOnly")
-
-# Read in relevant .stru (.ustr) file (smaller in size): 24 samples, 4410 loci, 2 rows per individual, etc.
-SRPOnly <- read.structure("SnakeRiverPlainOnly.stru", n.ind=24, n.loc=4410, onerowperind=FALSE,
-                          col.lab=1, col.pop=0, ask=FALSE)
-
-# Declare vector of population labels
-SRPLabels <- vector(length = 24)
-# Assign labels
-# Boise
-SRPLabels[grepl("Ck[0-9]", rownames(SRPOnly@tab))] <- 1
-# Bear
-SRPLabels[grepl("Ck[1-2][0-9]", rownames(SRPOnly@tab))] <- 2
-# Camas Prairie
-SRPLabels[grepl("Ck[2-3][0-9]", rownames(SRPOnly@tab))] <- 3
-# CRMO
-SRPLabels[grepl("Ck[4-5][0-9]", rownames(SRPOnly@tab))] <- 4
-
-# Push population labels into genind object
-pop(SRPOnly) <- factor(SRPLabels)
-
-# (...for checking that samples and population labels line up)
-cbind(rownames(SRPOnly@tab), SRPLabels)
-
-# Calculate fstats between populations
-f.stats.SRP <- pairwise.fst(x=SRPOnly,pop=SRPOnly@pop)
-f.stats.SRP
+# Calculate mean Fst
+mean(SRP.Fsttab[,2], na.rm = TRUE)
