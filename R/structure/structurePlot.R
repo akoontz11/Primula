@@ -1,4 +1,4 @@
-setwd("~/kaiser/Primula/code/structure/JuneSubset/")
+setwd("/home/akoontz11/kaiser/Code/structure/JuneSubset")
 
 # %%% READING IN DEMO FILE %%%----
 # Reading in K7_subset file, an updated version of the CLUMPAK K7.output file. 
