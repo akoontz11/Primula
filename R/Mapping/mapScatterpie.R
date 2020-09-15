@@ -7,14 +7,13 @@ library(maps)
 library(scatterpie)
 
 # Read in a csv containing population names, latitudes, and longitudes
-setwd("~/kaiser/Primula/code/Map/")
+setwd("~/kaiser/Code/R/Mapping/")
 pops <- read.csv("Coordinates.csv", header=T, sep=",")
 keep <- c("PopName", "latitude", "longitude")
 pops <- pops[keep]
 
 # Reading in K7_subset file, an updated version of the CLUMPAK K7.output file
 # This contains samples in their presented order, and has capillaris and one Troy Peak sample removed from file
-setwd("~/kaiser/Primula/code/structure/JuneSubset//")
 k7 <- read.table("K7_plot.csv", header=T)
 
 # For each group in the k7 file (which corresponds to a location on the map), calculate the mean for each cluster in that group
@@ -116,7 +115,6 @@ ggmap(myMap) + theme_void() +
                "PAR" = "#2171B5"
     ) 
   )
-
 
 # Lab demo----
 myLocation <- c(-126, 34.5, -108, 49.5)
