@@ -1,7 +1,9 @@
+# Script comparing the number of raw reads to filtered reads, for the UniqueReps ipyrad run.
+
 library(plotrix)
 
-# Read in and reformat the data
-setwd("/home/akoontz11/kaiser/Primula/ipyrad_UniqueReps/UniqueReps_outfiles/")
+# Read in and reformat the data (derived from ipyrad output text file)
+setwd("/home/akoontz11/kaiser/Code/ipyrad/UniqueReps/Outfiles_UniqueReps/")
 data <- read.table("UniqueReps_Reads.txt", header=TRUE)
 data$SampleName <- as.character(data$SampleName)
 str(data)

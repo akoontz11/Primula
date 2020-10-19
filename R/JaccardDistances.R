@@ -2,7 +2,7 @@
 
 # Initial clustering diagram----
 # Read in and reformat the data
-setwd("/home/akoontz11/kaiser/Primula/ipyrad/ipyrad_UniqueReps//UniqueReps_outfiles/distance_matrix/")
+setwd("/home/akoontz11/kaiser/Code/ipyrad/UniqueReps/Outfiles_UniqueReps/distance_matrix/")
 JMat <- read.table("Jaccob_sim_means.csv", header=TRUE, sep = ",")
 # Transpose rows and columns to get Jaccard similarities for each variety in a column
 JMat <- t(as.matrix(JMat))
@@ -49,7 +49,7 @@ mat[is.na(mat)] <- median(mat, na.rm=TRUE)
 plot(hclust(as.dist(mat)), main="Primula cusickiana species complex")
 
 # Jaccard matrix and PCA, for MinSamples35 ipyrad run----
-setwd("/home/akoontz11/kaiser/Primula/ipyrad_UniqueReps/MinSamples35_outfiles/distance_matrix/")
+setwd("/home/akoontz11/kaiser/Code/ipyrad/UniqueReps/Outfiles_UniqueReps/distance_matrix/")
 JMat <- read.table("Jaccob_sim_means.csv", header=TRUE, sep = ",")
 
 # Transpose rows and columns to get Jaccard similarities for each variety in a column

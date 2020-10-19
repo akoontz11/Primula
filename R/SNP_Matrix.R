@@ -1,6 +1,11 @@
 # ----Building SNP matrix----
+# Script for analyzing the sample by SNP matrix output from ipyrad. 
+# The purpose of this script is to determine how many SNPs are shared between replicates, 
+# and to also demonstrate how to combine the SNPs found between replicate samples. 
+# This script refers to the UniqueReps ipyrad run.
+
 library(vcfR)
-#setwd("/home/akoontz11/kaiser/Primula/ipyrad_UniqueReps/UniqueReps_outfiles/")
+setwd("/home/akoontz11/kaiser/Code/ipyrad/UniqueReps/")
 
 # Load in .vcf file using vcfR library
 vcf.Object <- read.vcfR("UniqueReps.vcf")
