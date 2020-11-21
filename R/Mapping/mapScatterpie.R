@@ -4,7 +4,7 @@ library(sf)
 library(rnaturalearth)
 library(rnaturalearthdata)
 library(maps)
-# raster, for getting elevation data
+# raster, for getting elevation data as well as slope and aspect
 library(raster)
 # scatterpie, for plotting pie charts
 library(scatterpie)
@@ -69,17 +69,23 @@ greatBasin
 # Load elevations using Rdata file
 load("map.Rdata")
 # Obtaining geographic data from GADM data set
-# US <- getData("GADM", country="USA", level=1)
-# # Subset by state name
-# greatBasinraster <- US[US$NAME_1 %in% c("Oregon", "Idaho", "Nevada", "Utah"),]
-# # Get elevations
-# elev <- getData("alt", country = "USA", mask = TRUE)
-# # Crop elevation dataset by greatBasinraster
-# elev <- crop(elev[[1]], greatBasinraster)
-# elev <- mask(elev, greatBasinraster)
-# # Convert raster to data.frame, for ggplot
-# elev_df <- raster::as.data.frame(elev, xy=TRUE)
-# elev_df <- elev_df[!is.na(elev_df$USA1_msk_alt),]
+US <- getData("GADM", country="USA", level=1)
+# Subset by state name
+greatBasinraster <- US[US$NAME_1 %in% c("Oregon", "Idaho", "Nevada", "Utah"),]
+# Get elevations
+elev <- getData("alt", country = "USA", mask = TRUE)
+# Crop elevation dataset by greatBasinraster
+elev <- crop(elev[[1]], greatBasinraster)
+elev <- mask(elev, greatBasinraster)
+# Convert raster to data.frame, for ggplot
+elev_df <- raster::as.data.frame(elev, xy=TRUE)
+elev_df <- elev_df[!is.na(elev_df$USA1_msk_alt),]
+# Generate hillshade based on elev raster
+slope <- terrain(elev, opt="slope")
+aspect <- terrain(elev, opt="aspect")
+hill <- hillShade(slope, aspect, 40, 270)
+hill_df <- raster::as.data.frame(hill, xy=TRUE)
+hill_df <- hill_df[!is.na(hill_df$layer),]
 
 # First line plots baseline Great Basin map
 ggplot(data = greatBasin) +
@@ -89,6 +95,46 @@ ggplot(data = greatBasin) +
   geom_tile(data = elev_df, aes(x = x, y = y, fill = USA1_msk_alt), alpha = 0.45, show.legend = FALSE) +
   # Use colors to paint elevation gradient
   scale_fill_gradient(low = "black", high = "white", name = "Elevation") +
+  geom_sf(fill = NA) +
+  # State labels
+  geom_text(data = greatBasin, aes(X, Y, label = c("NV", "UT", "ID", "OR")), size = 3) +
+  # Specify plotting window
+  coord_sf(xlim = c(-126, -108), ylim = c(34.5, 49.5), expand = FALSE) +
+  # Generate a new scale fill (for scatterpie; ggplot2 typically allows only one scale per plot)
+  new_scale_fill() +
+  # Scatterpie line, using the built pops matrix as data
+  geom_scatterpie(data = pops,
+                  aes(x=longitude, y=latitude, r = radius),
+                  legend_name = "Clusters",
+                  cols = c("SRP","JAR","OWY","MAG","DOM","NEV","PAR"),
+                  alpha = 0.5) +
+  scale_fill_manual(
+    breaks = c("SRP","JAR","OWY","MAG","DOM","NEV","PAR"),
+    labels = c("cusickiana_Idaho","cusickiana_Jarbidge","cusickiana_owyhee","maguirei","domensis","nevadensis_Troy", "parryi"),
+    values = c("SRP" = "#8C510A",
+               "JAR" = "#D95F02",
+               "OWY" = "#E7298A",
+               "MAG" = "#66A61E",
+               "DOM" = "#7570B3",
+               "NEV" = "#666666",
+               "PAR" = "#2171B5"
+    )
+  )
+
+# Example including hillshade
+# First line plots baseline Great Basin map
+ggplot(data = greatBasin) +
+  theme_void() +
+  geom_sf() +
+  # Using geom_tile to include hillshade
+  #geom_tile(data = hill_df, aes(x = x, y = y, fill = layer), alpha = 0.15, show.legend = FALSE) +
+  # Use colors to paint hillshade
+  #scale_fill_gradient(low = "white", high = "black", name = "Hillshade") +
+  #geom_sf(fill = NA) +
+  # Using geom_tile to include elevation data
+  geom_tile(data = elev_df, aes(x = x, y = y, fill = USA1_msk_alt), alpha = 0.75, show.legend = FALSE) +
+  # Use colors to paint elevation gradient
+  scale_fill_gradient2(low = muted("green"), mid = "brown", high = "white", name = "Elevation", midpoint = 1552) +
   geom_sf(fill = NA) +
   # State labels
   geom_text(data = greatBasin, aes(X, Y, label = c("NV", "UT", "ID", "OR")), size = 3) +
