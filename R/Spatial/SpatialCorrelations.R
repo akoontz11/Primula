@@ -1,6 +1,6 @@
-# %%% CODE FOR CORRELATING GENETIC AND GEOGRAPHIC DISTANCES %%%
+# %%% CORRELATING GENETIC AND GEOGRAPHIC DISTANCES %%%
 library(adegenet)
-library(geosphere) # For calculations of Vincenty distance (see distVincentyEllipsoid)
+library(geosphere) # For distGeo function
 setwd("/home/akoontz11/kaiser/Code/ipyrad/JuneSubset/Outfiles")
 
 # Read in JuneSubset STRUCTURE file, to create a genind object
@@ -9,7 +9,7 @@ junesub.genind <- import2genind("JuneSubset.str")
 str(junesub.genind)
 
 # Read in a csv containing population names, longitudes (x), and latitudes (y)
-setwd("~/kaiser/Code/R/Mantel/")
+setwd("~/kaiser/Code/R/Spatial/")
 pops <- read.csv("Coordinates_PopNames.csv", header=T, sep=",")
 pops
 
@@ -20,24 +20,35 @@ junesub.genind@pop <- pops$PopName
 # Add a matrix of coordinates as part of the genind object, in the 'other' slot
 junesub.genind@other$xy <- as.matrix(pops[,-1])
 rownames(junesub.genind@other$xy) <- pops$PopName
-junesub.genind@other$xy
 # Convert gendind to genpop object, using adegenet function
 junesub.genpop <- genind2genpop(junesub.genind)
 
 # Now, calculate the genetic and genographic distances of our populations
-# Each of these functions returns a distance matrix
-# Genetic matrix (Euclidean, Roger's)
-Dgen <- dist.genpop(junesub.genpop,method=2)
-# Distance matrix
-Dgeo <- dist(junesub.genind@other$xy)
+# Genetic distance matrix (Euclidean, Roger's)
+Dgen <- dist.genpop(junesub.genpop,method=4)
 
-length(c(Dgen))
-length(c(Dgeo))
-length(c(unique(Dgeo)))
+# For geographic distance matrix, first get list of unique longitudes/latitudes
+locations <- unique(junesub.genind@other$xy)
+# Make a dummy geographic matrix to accept values
+Dgeo <- matrix(NA, nrow = nrow(locations), ncol = nrow(locations))
+rownames(Dgeo) <- colnames(Dgeo) <- unique(rownames(junesub.genind@other$xy))
+# For each row of the matrix,
+for(i in 1:nrow(Dgeo)){
+  # and for each column in the matrix,
+  # (this is repetitive, but also this entire technique is fairly amateur...)
+  for(j in 1:ncol(Dgeo)){
+    # calculate geographic distance between points based on the locations list
+    Dgeo[i,j] <- distGeo(p1 = locations[i,], p2 = locations[j,])
+  }
+}
+# distGeo reports values in meters; convert that to kilometers. 
+# Also, only return the lower half of the matrix, since that's what we'll use
+Dgeo <- Dgeo/1000
 
-plot(c(Dgen) ~ c(unique(Dgeo)))
+# Plotting
+plot(c(Dgen) ~ Dgeo[lower.tri(Dgeo)], 
+     xlab = "Geographic distance (km)", ylab = "Genetic distance (Euclidean)",
+     main = "Genetic by Geographic distance")
 
-# Using package geosphere to calculate appropriate geographic distances
-distVincentyEllipsoid(p1=junesub.genind@other$xy)
+abline(reg=lm(c(Dgen) ~ Dgeo[lower.tri(Dgeo)]), col="red", lty=1, lwd=2)
 
-distGeo(p1=junesub.genind@other$xy)
