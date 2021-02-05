@@ -1,6 +1,6 @@
 # maguirei-only STRUCTURE plot
 
-setwd("/media/kaiser/akoontz11/Code/R/structure/")
+setwd("/home/austin/Documents/WolfLab/Primula/Analysis/Code/R/structure/")
 
 # %%% READING IN DEMO FILE %%%----
 # Reading in K3 file, an updated version of the CLUMPAK K3.output file. 

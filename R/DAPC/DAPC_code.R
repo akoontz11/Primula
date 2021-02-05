@@ -1,6 +1,6 @@
 library(adegenet)
 # %%% DAPC--JUNESUBSET STRUCTURE FILE %%% ----
-setwd("/home/akoontz11/kaiser/Code/ipyrad/JuneSubset/Outfiles")
+setwd("/home/austin/Documents/WolfLab/Primula/Analysis/Code/ipyrad/JuneSubset/Outfiles/")
 
 # Read in STRUCTURE file to genind object
 # 82 individuals, 1277 loci, with genotype labels. Genotypes NOT coded by a single row
