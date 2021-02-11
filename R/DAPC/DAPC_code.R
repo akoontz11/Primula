@@ -24,12 +24,26 @@ dapc1 <- dapc(x=junesub.genind, pop=grp$grp)
 str(dapc1)
 # List grouping of each individual (helpful for determining correct coloration)
 dapc1$grp
+# PC axis variance values
+eig.perc <- 100*dapc1$eig/sum(dapc1$eig)
 
 # Make a scatterplot of initial DAPC
 scatter(dapc1)
 scatter(dapc1, label = NULL)
 scatter(dapc1, clab = 0.5, label = letters[1:15])
 scatter(dapc1, clab = 0.5, scree.da = F)
+
+# Systematic Botany figure
+txt.leg <- c("cusickiana_Idaho","domensis","parryi","cusickiana_Owyhee","cusickiana_Jarbidge","nevadensis","maguirei")
+par(mar=c(5,1,1,1)+0.1, mgp = c(3,1,1))
+scatter(dapc1, clab = 0, scree.da = F, cstar=0, solid=0.6, cex=1.2,
+        col=c("#8C510A","#7570B3","#2171B5","#E7298A","#D95F02","#666666","#66A61E"))
+legend(x=-55, y=1.0, legend=txt.leg, cex=1, ncol=2, pch=16, bty="n",
+       col=c("#8C510A","#7570B3","#2171B5","#E7298A","#D95F02","#666666","#66A61E"),
+       x.intersp=0.2, y.intersp=0.15, text.width=20, xjust=0)
+text(x=-63, y=1, cex=0.8, "PC 1: 49.04%")
+text(x=-1, y=24, cex=0.8, srt=90, "PC 2: 27.27%")
+
 
 scatter(dapc1, scree.da=F, bg="white", pch=20, cell=0, cstar=0, solid=0.6, clab=0, legend=T,
         posi.leg=locator(n=1), cleg=1.0, cex=1.8, inset.solid=1, 
