@@ -86,13 +86,13 @@ dapc6$grp
 eig.perc <- 100*dapc6$eig/sum(dapc6$eig)
 
 # Plotting
-txt.leg <- c("maguirei","cusickiana_ID","domensis","cusickiana_Owyhee","nevadensis_GRBA","cusickiana_Jarbidge")
+txt.leg <- c("maguirei","cusickiana_SRP","domensis","cusickiana_Owyhee","nevadensis_GRBA","cusickiana_Jarbidge")
 par(mar=c(5,1,0,1)+0.1, mgp = c(3,1,1))
 scatter(dapc6, clab = 0, scree.da = F, cstar=0, solid=0.6, cex=1.2, 
         col=c("#66A61E","#8C510A","#7570B3","#E7298A","#666666","#D95F02"))
 legend(x=1, y=35, legend=txt.leg, cex=0.8, ncol=2, pch=16, bty="n",
        col=c("#66A61E","#8C510A","#7570B3","#E7298A","#666666","#D95F02"),
-       x.intersp=0.1, y.intersp=0.3, text.width=30, xjust=0)
+       x.intersp=0.25, y.intersp=0.3, text.width=30, xjust=0)
 text(x=40, y=1, cex=0.8, "PC 1: 50.98%")
 text(x=-1, y=13, cex=0.8, srt=90, "PC 2: 23.29%")
 
