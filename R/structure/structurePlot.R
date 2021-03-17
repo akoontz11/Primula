@@ -37,16 +37,16 @@ plot_k <- function(klist,labelPositions,...){
 dev.off()
 plot_k(k7[,4:10], labelPos)
 # Plotting lines beneath groups
-lineWidth <- 1.3; lineHeight <- rep(-0.015,2)
+lineWidth <- 1.9; lineHeight <- rep(-0.015,2)
 
-lines(x = c(0.2,28.6), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(29.1,34.7), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(35.2,39.4), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(39.9,61), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(61.5,79.1), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(79.6,85.0), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(85.5,89.8), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(90.3,98.3), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(0.3,28.3), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(29.4,34.4), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(35.1,39.1), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(40.0,60.7), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(61.5,78.8), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(79.5,84.7), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(85.5,89.5), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(90.5,98.0), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
 
 # %%% PLOTTING DIFFERENT CLUSTERS FOR K=6 %%%----
 # Code for plotting function
