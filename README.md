@@ -8,3 +8,5 @@ The `ipyrad` directory contains 4 folders, each corresponding to a unique run of
 The `structure` directory contains folders holding the `mainparams` and `extraparams` files for various STRUCTURE runs, as well as scripts used for these STRUCTURE runs and (occasionally) the .str (or .ustr) files themselves. Note that some of these STRUCTURE runs were exploratory, while others are referred to in our final analyses.
 
 Finally, the `R` directory contains R scripts used for data analysis. This is currently a little disorganized, but directories are used to group scripts designed for similar purposes.
+
+Code for building the map, as well as the python script for caluclating Jaccard similarities, were contributed by Dr. Carol Rowe.
