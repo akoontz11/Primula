@@ -1,4 +1,4 @@
-setwd("/home/akoontz11/kaiser/Code/structure/JuneSubset")
+setwd("/home/akoontz11/kaiser/Code/R/structure/")
 
 # %%% READING IN DEMO FILE %%%----
 # Reading in K7_subset file, an updated version of the CLUMPAK K7.output file. 
@@ -7,7 +7,7 @@ setwd("/home/akoontz11/kaiser/Code/structure/JuneSubset")
 k7 <- read.table("K7_plot.csv", header=T)
 
 # Make a vector of names
-names <- c("cusickiana_Idaho","cusickiana_Jarbidge","cusickiana_Owyhee","maguirei","domensis","nevadensis_GRBA","nevadensis_Troy", "parryi")
+names <- c("cusickiana_SRP","cusickiana_Jarbidge","cusickiana_Owyhee","maguirei","domensis","nevadensis_GRBA","nevadensis_Troy", "parryi")
 # Make a vector for name positions on graph
 labelPos <- c(16, 32, 37, 50, 71, 82, 88, 94)
 
@@ -37,16 +37,16 @@ plot_k <- function(klist,labelPositions,...){
 dev.off()
 plot_k(k7[,4:10], labelPos)
 # Plotting lines beneath groups
-lineWidth <- 1.3; lineHeight <- rep(-0.015,2)
+lineWidth <- 1.9; lineHeight <- rep(-0.015,2)
 
-lines(x = c(0.2,28.6), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(29.1,34.7), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(35.2,39.4), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(39.9,61), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(61.5,79.1), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(79.6,85.0), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(85.5,89.8), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
-lines(x = c(90.3,98.3), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(0.3,28.3), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(29.4,34.4), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(35.1,39.1), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(40.0,60.7), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(61.5,78.8), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(79.5,84.7), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(85.5,89.5), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
+lines(x = c(90.5,98.0), y = lineHeight, lwd = lineWidth, col = "black", xpd = NA)
 
 # %%% PLOTTING DIFFERENT CLUSTERS FOR K=6 %%%----
 # Code for plotting function
