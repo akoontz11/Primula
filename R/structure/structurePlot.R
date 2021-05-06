@@ -16,7 +16,7 @@ plot_k <- function(klist,labelPositions,...){
   # List of colors, which are combinations of RGB components, in hexadecimal  
   colors <- c("#2171B5","#D95F02","#7570B3","#E7298A","#66A61E","#8C510A","#666666")
   # Graphing parameters
-  par(mar=c(5,2,4,1)+0.1, mgp = c(3,1,1))
+  par(mar=c(7,2,10,1)+0.1, mgp = c(3,1,1))
   for(i in 1:length(klist)){
     if(i==1){
       # Initial barplot
@@ -31,8 +31,7 @@ plot_k <- function(klist,labelPositions,...){
   # y axis
   axis(2, at = c(0, 0.25, 0.5, 0.75, 1), labels=c("0", "0.25", "0.50", "0.75", "1.00"), cex.axis = 1, las = 2, pos = -0.2, xpd=T)
   # Add group labels
-  # text(x=labelPositions, y=-0.026, srt=45, adj=1, xpd=TRUE, labels=names, cex=0.8)
-  text(x=labelPositions, y=-0.031, srt=35, adj=1, xpd=TRUE, labels=names, cex=1)
+  text(x=labelPositions, y=-0.031, srt=35, adj=1, xpd=TRUE, labels=names, cex=1.2)
 }
 dev.off()
 plot_k(k7[,4:10], labelPos)
