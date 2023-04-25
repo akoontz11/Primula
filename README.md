@@ -1,6 +1,6 @@
 # Overview
 
-This repository contains the scripts and parameter files used for the genomic analysis of the <em>Primula cusickiana</em> species complex. 
+This repository contains the scripts and parameter files used for the genomic analysis of the <em>Primula cusickiana</em> species complex. The article describing these analyses is published with Systematic Botany and can be found [here](https://bioone.org/journals/systematic-botany/volume-47/issue-3/036364422X16573019348175/Pronounced-Genetic-Separation-among-Varieties-of-the-Primula-cusickiana-Species/10.1600/036364422X16573019348175.full). 
 
 ## ipyrad 
 The `ipyrad` directory contains 3 folders, each corresponding to a unique run of the [ipyrad](https://ipyrad.readthedocs.io/en/latest/) software pipeline. Directories contain the relevant `params` files used for each run, as well as relevant outfiles (although not all output files are included, as this is unecessary and would require too much space).
